@@ -28,8 +28,8 @@
 import urllib.request
 import urllib.parse
 
-start_page = 1
-end_page = 4
+start_page = int(input('start page:'))
+end_page = int(input('end page:'))
 
 base_url = 'https://jupiter.jora.com/api/v1/jobs?keywords=cyber%20security&'
 end_url = '&session_id=bffba802cdba738ce6c0ce38dd78be9a&search_id=JTKQjRsgBv7EizJVwH1y-bffba802cdba738ce6c0ce38dd78be9a-MxgygHiUocT_Ff7Ml4JJ&session_type=web&user_id=JTKQjRsgBv7EizJVwH1y&logged_user=false&mobile=false&site_id=1&country=AU&host=https://jupiter.jora.com&full_text_only_search=false&ads_per_page=5&callback=_jsonp_0'
