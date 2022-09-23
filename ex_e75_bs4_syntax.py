@@ -21,6 +21,6 @@ from bs4 import BeautifulSoup
 # print(list)
 # print(list.attrs) # returns the attributes
 # print(list.name) # returns the name of the tag
-# print(list.attrs) # returns the attributes
+# print(list.attrs.get('class')) # returns the attribute
 # print(list.string.get('class')) 
 # print(list.get_text()) # always works, preferred
