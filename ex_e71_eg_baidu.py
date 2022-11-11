@@ -11,5 +11,5 @@ response = urllib.request.urlopen(request)
 content = response.read().decode('utf-8')
 
 tree=etree.HTML(content)
-result = tree.xpath('//input[@id="su"]/@value')[0]
+result = tree.xpath('//div[@id="rtoDetails-3"]/div[@class="outer"]/h2@value')
 print(result)

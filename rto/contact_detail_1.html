@@ -1,0 +1,4209 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-au" xml:lang="en-au">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Language" content="en" />
+    <meta property="og:url" content="https://training.gov.au" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="training.gov.au" />
+    <meta
+      property="og:description"
+      content="training.gov.au is the national register for training in Australia"
+    />
+    <meta
+      property="og:image"
+      content="https://training.gov.au/Content/images/training-logo-red-RGB-237.png"
+    />
+    <meta name="viewport" content="width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10" />
+    <meta
+      name="Description"
+      content="Australian Government Department of Employment, Skills, Small and Family Business - Training.Gov.Au"
+    />
+    <meta
+      name="Copyright"
+      content="Copyright (©) 2011-2013 by Hammond Street Developments Pty. Ltd."
+    />
+    <meta name="Keywords" content="training, tp, vet, isc" />
+
+    <link
+      rel="icon"
+      type="image/vnd.microsoft.icon"
+      href="/Content/images/favicon.ico"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/vnd.microsoft.icon"
+      href="/Content/images/favicon.ico"
+    />
+
+    <link
+      href="/Content/Styles/basicCcs?v=vkcB4YpFagCpCArvJ7lblYr3ZwMYRcIDjHxQi0sL5681"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="print"
+      href="/Content/Styles/print.css"
+    />
+
+    <!--[if IE]>
+      <link
+        rel="stylesheet"
+        media="screen"
+        type="text/css"
+        href="/Content/Styles/IeStylesheet.css"
+      />
+    <![endif]-->
+    <!--[if IE 9]>
+      <link
+        rel="stylesheet"
+        media="screen"
+        type="text/css"
+        href="/Content/Styles/Ie9Stylesheet.css"
+      />
+    <![endif]-->
+    <!--[if IE 8]>
+      <link
+        rel="stylesheet"
+        media="screen"
+        type="text/css"
+        href="/Content/Styles/Ie8Stylesheet.css"
+      />
+    <![endif]-->
+    <!--[if IE 7]>
+      <link
+        rel="stylesheet"
+        media="screen"
+        type="text/css"
+        href="/Content/Styles/Ie7Stylesheet.css"
+      />
+    <![endif]-->
+    <!--[if lte IE 6]>
+      <link
+        rel="stylesheet"
+        media="screen"
+        type="text/css"
+        href="/Content/Styles/Ie6Stylesheet.css"
+      />
+    <![endif]-->
+
+    <script type="text/javascript" src="/Scripts/jquery-1.4.3.js"></script>
+
+    <title>training.gov.au - 41056 - 3Bridges Community Limited</title>
+
+    <script type="text/javascript">
+      <!--
+
+      function getWindow() {
+        var windowElement = $("#Window");
+
+        return windowElement.data("tWindow");
+      }
+
+      var dialogOpen = false;
+
+      function showHistory(RtoId, NrtId) {
+        var windowElement = $("#Window");
+
+        var window = getWindow();
+
+        window.content("Loading data...");
+
+        $.ajax({
+          type: "POST",
+
+          url: "/Organisation/AjaxScopeDeliveryNotificationHistoryWindow",
+
+          data: { rtoId: RtoId, NrtId: NrtId },
+
+          success: function (data) {
+            window.content(data);
+
+            $(window.element).find("h3").attr("tabIndex", "-1").focus();
+          },
+
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("Failed to obtain history data.");
+          },
+        });
+
+        window.center();
+
+        window.open();
+
+        dialogOpen = true;
+
+        $("html,body").animate(
+          { scrollTop: windowElement.offset().top },
+          "slow"
+        );
+      }
+
+      function whenHistoryWindowClosed() {
+        RestoreWindowIfMaximised();
+
+        dialogOpen = false;
+
+        focusOnCodeFieldLink($("#nrtId").val());
+      }
+
+      function RestoreWindowIfMaximised() {
+        var window = getWindow();
+
+        // We don't want to remember maximizing as it affects the window being scrolled into view.
+
+        if (window.isMaximized) {
+          window.restore();
+        }
+      }
+
+      function closeWindow(id) {
+        var window = getWindow();
+
+        RestoreWindowIfMaximised(window);
+
+        window.close();
+
+        focusOnCodeFieldLink(id);
+      }
+
+      function focusOnCodeFieldLink(id) {
+        var viewHistoryAnchor = $("#" + id);
+
+        //var codeAnchor = $('td:first-child a', viewHistoryAnchor.closest('tr'));
+
+        viewHistoryAnchor.focus();
+      }
+
+      function OnTabSelect() {
+        var currenttab = $("#rtoDetails").context.activeElement.text;
+
+        if (currenttab === "Regulatory Decision Information") {
+          var datamanager = "ASQA";
+
+          var showprivate = "False";
+
+          if (
+            datamanager === "ASQA" ||
+            datamanager === "WA TAC" ||
+            showprivate === "True"
+          ) {
+            $("#detailsDisplayHistoryId").show();
+
+            //setCookieForHistory("ifShowRDIHistory", true, 7);
+          } else {
+            $("#detailsDisplayHistoryId").hide();
+
+            //setCookieForHistory("ifShowRDIHistory", false, 7);
+          }
+
+          //alert(selected);
+        } else {
+          $("#detailsDisplayHistoryId").show();
+        }
+      }
+
+      $(document).ready(function (e) {
+        if (document.addEventListener) {
+          document.addEventListener(
+            "focus",
+            function (event) {
+              var popup = document.getElementById("Window");
+
+              if (popup != null) {
+                if (dialogOpen && !popup.contains(event.target)) {
+                  event.stopPropagation();
+
+                  $(popup).find("a:first").focus();
+                }
+              }
+            },
+            true
+          );
+        } else {
+          //IE8 fix
+
+          var tgalogo = document.getElementById("TGALogo");
+
+          if (tgalogo.attachEvent) {
+            tgalogo.attachEvent("onfocus", function (event) {
+              var popup = document.getElementById("Window");
+
+              if (popup != null) {
+                if (dialogOpen) {
+                  $(popup).find("a:first").focus();
+                }
+              }
+            });
+          }
+        }
+      });
+
+      //-->
+    </script>
+
+    <script type="text/javascript">
+      var gaJsHost =
+        "https:" == document.location.protocol ? "https://ssl" : "http://www";
+      var _gaq = _gaq || [];
+      _gaq.push(["_setAccount", "UA-30207537-1"]);
+      _gaq.push(["_trackPageview"]);
+      (function () {
+        var ga = document.createElement("script");
+        ga.type = "text/javascript";
+        ga.async = true;
+        ga.src = gaJsHost + ".google-analytics.com/ga.js";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+  </head>
+  <body>
+    <a onclick="topFunction()" id="scrollToTop" title="Back to top"
+      ><p class="scrollToTopText">^</p></a
+    >
+
+    <script>
+      var lastFocus;
+
+      $(document).ready(function () {
+        $("a").focusout(function () {
+          lastFocus = this;
+        });
+      });
+
+      //Bad code to get around skipping anchor in IE
+
+      function SkipFocus() {
+        if (lastFocus != null) {
+          var ntabindex = parseFloat(lastFocus.getAttribute("tabindex"));
+
+          if (ntabindex == 3 || ntabindex == 4) {
+            var nextElem = $("[tabindex=6]").focus();
+
+            if (nextElem != null) {
+              nextElem.focus();
+            }
+          } else if (ntabindex == 6) {
+            var prevElem;
+
+            prevElem = $("[tabindex=4]");
+
+            if (prevElem != null) {
+              prevElem.focus();
+            }
+          }
+        }
+      }
+
+      //drop down menu events
+
+      $(document).ready(function () {
+        $(".menudropdowncontent>a").focus(function () {
+          $(this).parent().css("z-index", "100");
+        });
+
+        $(".menudropdowncontent>a").focusout(function () {
+          $(this).parent().css("z-index", "");
+        });
+
+        $(".menudropdowncontent>input").focus(function () {
+          $(this).parent().css("z-index", "100");
+        });
+
+        $(".menudropdowncontent>input").focusout(function () {
+          $(this).parent().css("z-index", "");
+        });
+      });
+
+      function SetHomePageToNew() {
+        var cookie = "HomePageNew";
+
+        setCookieForHistory(cookie, "New", 56);
+      }
+
+      function SetHomePageToCurrent() {
+        var cookie = "HomePageNew";
+
+        setCookieForHistory(cookie, "Current", 56);
+      }
+    </script>
+
+    <div id="page">
+      <div id="header">
+        <div id="title">
+          <a href="/" tabindex="1" title="Link to home" id="TGALogo">
+            <img
+              src="/Content/images/training-logo-red-RGB-237.png"
+              alt="training.gov.au - logo"
+            />
+          </a>
+        </div>
+
+        <div id="accessibilityLinks">
+          <a href="#content" tabindex="2">Skip to content</a>
+
+          <a href="#navigation" tabindex="3">Skip to primary navigation</a>
+
+          <a href="#breadcrumbnavigation" tabindex="4"
+            >Skip to breadcrumb navigation</a
+          >
+        </div>
+
+        <div class="UpperMenu">
+          <a
+            href="https://training.gov.au:443/Account/SignIn?returnUrl=/Organisation/Details/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=2"
+            tabindex="7"
+            title="Link to sign in"
+            >Sign in</a
+          >
+
+          <span>|</span>
+
+          <a href="/Home/About" tabindex="6">About us</a>
+        </div>
+
+        <div id="headerLogoGov">
+          <img
+            src="/Content/images/ausgov-stacked-w150.png"
+            alt="Australian Government Logo"
+          />
+        </div>
+
+        <div id="menucontainer">
+          <span class="skipLink"
+            ><a
+              name="navigation"
+              id="navigation"
+              tabindex="5"
+              onfocus="SkipFocus();"
+            ></a
+          ></span>
+          <!-- onfocus="SkipFocus();" -->
+
+          <input type="checkbox" id="menu" />
+
+          <label for="menu"></label>
+
+          <div id="menuleft" class="navbar t-MenuHeader">
+            <a
+              href="/Home/Tga"
+              title="Link to Home"
+              tabindex="8"
+              class="HomeIcon"
+              ><span class="accessibilityOnly">Link to home.</span></a
+            ><a href="/Search" title="Link to search" tabindex="9">Search</a
+            ><a href="/Reporting" tabindex="10" title="Link to reports"
+              >Reports</a
+            >
+            <div class="menuDropDown">
+              <a href="/Link" title="Link to resources" tabindex="11"
+                >Resources<span class="MenuArrow"></span
+              ></a>
+
+              <div class="menudropdowncontent">
+                <a
+                  href="/Link#AnchorAustralianGovernmentBodies"
+                  title="Link to Australian Government bodies resources"
+                  tabindex="12"
+                  >Australian Government Bodies</a
+                >
+
+                <a
+                  href="/Link#TrainingPackageDevelopers"
+                  title="Link to Training Package Developers resources"
+                  tabindex="13"
+                  >Training Package Developers</a
+                >
+
+                <a
+                  href="/Link#AnchorSTAs"
+                  title="Link to Regulatory Authorities resources"
+                  tabindex="14"
+                  >Regulatory Authorities</a
+                >
+
+                <a
+                  href="/Link#AnchorRCABs"
+                  title="Link to State and Territory Government Training Departments resources"
+                  tabindex="15"
+                  >State and Territory Government Training Departments</a
+                >
+
+                <a
+                  href="/Link#AnchorNationalVETWebsites"
+                  title="Link to National VET Websites resources"
+                  tabindex="16"
+                  >National VET Websites</a
+                >
+              </div>
+            </div>
+            <div class="menuDropDown">
+              <a href="javascript:void(0)" tabindex="17"
+                >More<span class="MenuArrow"></span
+              ></a>
+
+              <div class="menudropdowncontent">
+                <a href="/Home/News" tabindex="18" title="Link to news">News</a
+                ><a
+                  href="/Home/Enquiry"
+                  tabindex="19"
+                  title="Link to frequently asked questions &amp; contact us"
+                  >Frequently Asked Questions &amp; Contact Us</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div id="menuright" class="navbar t-MenuHeader">
+            <div style="padding: 0.25em 0.97em"></div>
+          </div>
+        </div>
+
+        <div id="MenuSearchBar" class="MenuSearchBar">
+          <form action="/Search" id="TgaSearchBarForm" method="get">
+            <div class="SearchOptions">
+              <input
+                type="radio"
+                id="NrtSearchBar"
+                name="SearchType"
+                value="Nrt"
+                onclick="ToggleSearchOption(this)"
+                checked="checked"
+              /><label for="NrtSearchBar">NRT</label>
+
+              <input
+                type="radio"
+                id="RtoSearchBar"
+                name="SearchType"
+                value="Rto"
+                onclick="ToggleSearchOption(this)"
+              /><label for="RtoSearchBar">RTO/Org</label>
+
+              <span id="togglerSearchBar" class=""></span>
+            </div>
+
+            <div class="SearchBoxLarge">
+              <label for="TgaSearchBar" class="visuallyhidden"
+                >Search TGA</label
+              >
+
+              <input
+                name="searchTitleOrCode"
+                id="TgaSearchBar"
+                type="text"
+                placeholder="Keyword search"
+                value=""
+              />
+
+              <input
+                type="submit"
+                name="searchTgaSubmit"
+                class="t-button size-xs-button"
+                value="Search"
+                id="searchTGA"
+              />
+
+              <span
+                onclick="document.getElementById('TgaSearchBar').value = '';$('.SearchBoxSmall .deleteicon').removeClass('deleteiconshow');$('.SearchBoxLarge .deleteicon').removeClass('deleteiconshow');"
+                class="deleteicon"
+                >X</span
+              >
+            </div>
+
+            <input
+              type="hidden"
+              name="searchTgaSubmit"
+              id="searchTgaSubmitSearchBar"
+              value="Search"
+            />
+          </form>
+        </div>
+      </div>
+
+      <div id="layoutWrapper">
+        <div id="oneColLayout">
+          <div id="breadcrumbs">
+            <span class="skipLink"
+              ><a name="breadcrumbnavigation" id="breadcrumbnavigation"></a
+            ></span>
+
+            <span class="accessibilityOnly">You are here: </span>
+
+            <ul class="breadcrumbs">
+              <li><a href="/">Home</a></li>
+              <li><a href="/Organisation">Organisation/RTO</a></li>
+              <li>Organisation details</li>
+            </ul>
+          </div>
+
+          <div id="newQuickHelpDiv"></div>
+
+          <div class="layoutContentWrapper" id="layoutContentWrapper">
+            <span class="skipLink">
+              <a name="content" id="content" tabindex="-1"></a>
+            </span>
+            <div id="headerPrint"></div>
+
+            <div class="t-widget t-window" id="Window" style="display: none">
+              <div class="t-window-titlebar t-header">
+                <span class="t-window-title">Notification history</span>
+                <div class="t-window-actions t-header">
+                  <a class="t-window-action t-link" href="#"
+                    ><span class="t-icon t-maximize">Maximize</span></a
+                  ><a class="t-window-action t-link" href="#"
+                    ><span class="t-icon t-close">Close</span></a
+                  >
+                </div>
+              </div>
+              <div
+                class="t-window-content t-content"
+                style="overflow: auto; width: 800px; height: 300px"
+              ></div>
+            </div>
+
+            <div id="printButtons" class="organisationPrintButtons">
+              <a
+                class="linkPrintDoc"
+                href="/Organisation/DetailsPrint?OrganisationId=93cd5367-2c2a-4453-aff5-c38ecf013004&amp;Format=docx&amp;displayHistory=true&amp;displayRDIHistory=True&amp;showImplicitScope=False&amp;displayCRICOSCode=True"
+                id="lnkPrintDoc"
+                title="Export this information to Word"
+                >Export to Word</a
+              >
+
+              <a
+                class="linkPrintPdf"
+                href="/Organisation/DetailsPrint?OrganisationId=93cd5367-2c2a-4453-aff5-c38ecf013004&amp;Format=pdf&amp;displayHistory=true&amp;displayRDIHistory=True&amp;showImplicitScope=False&amp;displayCRICOSCode=True"
+                id="lnkPrintPdf"
+                title="Export this information to PDF"
+                >Export to PDF</a
+              >
+
+              <a
+                class="linkEmail"
+                href="/ChangeNotification/NotificationAdd?OrganisationId=93cd5367-2c2a-4453-aff5-c38ecf013004&amp;ReturnTo=OrganisationDetails"
+                id="lnkNotify"
+                title="Notify me of changes to this Organisation"
+                >Notify me of changes</a
+              >
+
+              <a
+                href="http://www.myskills.gov.au/RegisteredTrainers/Details?rtocode=41056"
+                title="External link to information on the MySkills web site"
+                target="_blank"
+                rel="noopener"
+                class="searchLinkMySkills"
+                >View on<img
+                  src="/Content/images/MySkillsLogoBlue.png"
+                  alt="MySkills logo"
+                /><span class="accessibilityOnly">(external link)</span></a
+              >
+            </div>
+
+            <h1>Organisation details</h1>
+
+            <br />
+
+            <h2 style="clear: both">41056 - 3Bridges Community Limited</h2>
+
+            <div class="display-row">
+              <div class="display-label">Status:</div>
+
+              <div class="display-field-no-width">
+                <span class="green"> Current</span>
+              </div>
+            </div>
+
+            <div class="display-row">
+              <div class="display-label">Registration manager:</div>
+
+              <div class="display-field-no-width">
+                <a
+                  href="http://www.asqa.gov.au"
+                  title="Visit the website for Australian Skills Quality Authority."
+                  target="_blank"
+                  >Australian Skills Quality Authority
+                  <span class="accessibilityOnly">(external link)</span
+                  ><img src="/Content/images/openNewWindow.png" alt=""
+                /></a>
+              </div>
+            </div>
+
+            <br />
+
+            <span class="accessibilityOnly"
+              >The following 6 links change the content below.</span
+            >
+            <div class="t-widget t-tabstrip t-header" id="rtoDetails">
+              <ul class="t-reset t-tabstrip-items">
+                <li class="t-item t-state-default">
+                  <a
+                    class="t-link"
+                    href="/Organisation/AjaxDetailsLoadSummary/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=0"
+                    id="detailsSummaryTab"
+                    >Summary</a
+                  >
+                </li>
+                <li class="t-item t-state-default">
+                  <a
+                    class="t-link"
+                    href="/Organisation/AjaxDetailsLoadRegistration/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=1"
+                    id="detailsRegistrationTab"
+                    >Registration</a
+                  >
+                </li>
+                <li class="t-item t-state-default t-state-active">
+                  <a class="t-link" href="#rtoDetails-3" id="detailsContactsTab"
+                    >Contacts</a
+                  >
+                </li>
+                <li class="t-item t-state-default">
+                  <a
+                    class="t-link"
+                    href="#rtoDetails-4"
+                    id="detailsAddressesTab"
+                    >Addresses</a
+                  >
+                </li>
+                <li class="t-item t-state-default">
+                  <a
+                    class="t-link"
+                    href="/Organisation/AjaxDetailsLoadScope/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=4"
+                    id="detailsScopeTab"
+                    >Scope</a
+                  >
+                </li>
+                <li class="t-item t-state-default">
+                  <a
+                    class="t-link"
+                    href="/Organisation/AjaxDetailsLoadRegulatoryDecisions/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=5"
+                    id="detailsNotificationsTab"
+                    >Regulatory Decision Information</a
+                  >
+                </li>
+                <li class="t-item t-state-default">
+                  <a
+                    class="t-link"
+                    href="/Organisation/AjaxDetailsLoadNotification/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=6"
+                    id="detailsRestrictionsTab"
+                    >Delivery</a
+                  >
+                </li>
+              </ul>
+
+              <div
+                class="details-display-history"
+                id="detailsDisplayHistoryId"
+                style="display: none; margin-top: 40px; margin-bottom: 10px"
+              >
+                <input
+                  type="checkbox"
+                  id="displayHistory"
+                  name="displayHistory"
+                  title="Display history (below each table)"
+                  value="true"
+                  checked="checked"
+                />
+
+                <a
+                  href="#"
+                  id="displayHistoryLabel"
+                  style="color: #1d60ff; cursor: pointer"
+                  >Display history</a
+                >
+              </div>
+
+              <div class="t-content" id="rtoDetails-1"></div>
+              <div class="t-content" id="rtoDetails-2"></div>
+              <div
+                class="t-content t-state-active"
+                id="rtoDetails-3"
+                style="display: block"
+              >
+                <div class="outer">
+                  <h2 class="legend">Chief Executive</h2>
+
+                  <div class="fieldset" style="display: flex">
+                    <div style="float: left; width: 500px">
+                      <div class="display-row">
+                        <div class="display-label">Contact name:</div>
+
+                        <div class="display-field-no-width">
+                          Mr. Rajeesh Nair
+                        </div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Job title:</div>
+
+                        <div class="display-field-no-width">
+                          Chief Executive Officer
+                        </div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Organisation name:</div>
+
+                        <div class="display-field-no-width">
+                          3Bridges Community Limited
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="float: left; width: 500px">
+                      <div class="display-row">
+                        <div class="display-label">Phone:</div>
+
+                        <div class="display-field-no-width">(02) 8558 4019</div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Mobile:</div>
+
+                        <div class="display-field-no-width">0411 845 289</div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Email:</div>
+
+                        <div class="display-field-no-width">
+                          Raj.Nair@3bridges.org.au
+                        </div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Address:</div>
+
+                        <div class="display-field-no-width">
+                          1/72 Carwar Ave<br />Carss ParkNSW2221
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="outer">
+                  <h2 class="legend">Registration Enquiries</h2>
+
+                  <div class="fieldset" style="display: flex">
+                    <div style="float: left; width: 500px">
+                      <div class="display-row">
+                        <div class="display-label">Contact name:</div>
+
+                        <div class="display-field-no-width">
+                          Ms. Leslie Shepley
+                        </div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Job title:</div>
+
+                        <div class="display-field-no-width">
+                          Training &amp; Education Coordinator
+                        </div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Organisation name:</div>
+
+                        <div class="display-field-no-width">
+                          3Bridges Community Limited
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="float: left; width: 500px">
+                      <div class="display-row">
+                        <div class="display-label">Phone:</div>
+
+                        <div class="display-field-no-width">(02) 8558 4044</div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Email:</div>
+
+                        <div class="display-field-no-width">
+                          training@3bridges.org.au
+                        </div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Address:</div>
+
+                        <div class="display-field-no-width">
+                          1/72 Carwar Ave<br />Carss ParkNSW2221
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="outer">
+                  <h2 class="legend">Public Enquiries</h2>
+
+                  <div class="fieldset" style="display: flex">
+                    <div style="float: left; width: 500px">
+                      <div class="display-row">
+                        <div class="display-label">Contact name:</div>
+
+                        <div class="display-field-no-width">
+                          Mr. Daniel Emmerick
+                        </div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Job title:</div>
+
+                        <div class="display-field-no-width">
+                          Associate General Manager
+                        </div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Organisation name:</div>
+
+                        <div class="display-field-no-width">
+                          3Bridges Community Limited
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="float: left; width: 500px">
+                      <div class="display-row">
+                        <div class="display-label">Phone:</div>
+
+                        <div class="display-field-no-width">0409 563 739</div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Email:</div>
+
+                        <div class="display-field-no-width">
+                          daniel.emmerick@3bridges.org.au
+                        </div>
+                      </div>
+
+                      <div class="display-row">
+                        <div class="display-label">Address:</div>
+
+                        <div class="display-field-no-width">
+                          1/72 Carwar Ave<br />Carss ParkNSW2221
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div id="contactHistoryField">
+                  <br />
+
+                  <h3>Chief Executive history</h3>
+
+                  <div class="t-widget t-grid" id="ChiefExecutive">
+                    <table
+                      cellspacing="0"
+                      summary="Click on a column header to sort data"
+                      title="Click on a column header to sort data"
+                    >
+                      <colgroup>
+                        <col />
+                        <col style="width: 80px" />
+                        <col style="width: 80px" />
+                      </colgroup>
+                      <thead class="t-grid-header">
+                        <tr>
+                          <th class="t-header" scope="col"></th>
+                          <th class="t-header" scope="col">Start date</th>
+                          <th class="t-last-header t-header" scope="col">
+                            End date
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr. Rajeesh Nair
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Chief Executive Officer
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4019
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                Raj.Nair@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>22/Mar/2021</td>
+                          <td class="t-last"></td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Naomi Bryant
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">CEO</div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                1300 327 434
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                naomi.bryant@3Bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>09/Mar/2021</td>
+                          <td class="t-last">21/Mar/2021</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr. Rajeesh Nair
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Chief Executive Officer
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4019
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                Raj.Nair@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>09/Jan/2021</td>
+                          <td class="t-last">08/Mar/2021</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Rosemary Bishop
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">CEO</div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4000
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4050
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                Rosemary.Bishop@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>28/Oct/2016</td>
+                          <td class="t-last">08/Jan/2021</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Rosemary Bishop
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">CEO</div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4000
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4050
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                rosemary.bishop@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />CARSS PARKNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>15/Oct/2015</td>
+                          <td class="t-last">27/Oct/2016</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Rosemary Bishop
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">CEO</div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Incorporated
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4000
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4050
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                rosemary.bishop@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />CARSS PARKNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">14/Oct/2015</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <br />
+
+                  <h3>Managerial Agent history</h3>
+
+                  <div class="t-widget t-grid" id="ManagerialAgent">
+                    <table
+                      cellspacing="0"
+                      summary="Click on a column header to sort data"
+                      title="Click on a column header to sort data"
+                    >
+                      <colgroup>
+                        <col />
+                        <col style="width: 80px" />
+                        <col style="width: 80px" />
+                      </colgroup>
+                      <thead class="t-grid-header">
+                        <tr>
+                          <th class="t-header" scope="col"></th>
+                          <th class="t-header" scope="col">Start date</th>
+                          <th class="t-last-header t-header" scope="col">
+                            End date
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Rosemary Bishop
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>28/Jun/2018</td>
+                          <td class="t-last">16/Mar/2020</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Catriona Barry
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>28/Jun/2018</td>
+                          <td class="t-last">16/Mar/2020</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr Neil Jackson
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>28/Jun/2018</td>
+                          <td class="t-last">16/Mar/2020</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Robyn Howlett
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>28/Jun/2018</td>
+                          <td class="t-last">31/Mar/2019</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr Martin Illford
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>28/Jun/2018</td>
+                          <td class="t-last">16/Mar/2020</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr Paul Hawkins
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>28/Jun/2018</td>
+                          <td class="t-last">16/Mar/2020</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr Mark Peter Kunnen
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>23/Dec/2015</td>
+                          <td class="t-last">27/Oct/2016</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr Paul Hawkins
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>15/Oct/2015</td>
+                          <td class="t-last">27/Oct/2016</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Robyn Howlett
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>31/Jul/2015</td>
+                          <td class="t-last">27/Oct/2016</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr Martin Illford
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>31/Jul/2015</td>
+                          <td class="t-last">27/Oct/2016</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Rosemary Bishop
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">27/Oct/2016</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr James Hamilton
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">27/May/2016</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Sonia Wutzke
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">27/May/2016</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Maria Stafford
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">22/Dec/2015</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Catriona Barry
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">27/Oct/2016</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Cheryl Hastie
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">27/May/2016</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr Neil Jackson
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">27/Oct/2016</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Janet Green
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">27/Oct/2016</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr Frank Crawford
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+                          </td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">27/May/2016</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <br />
+
+                  <h3>Public Enquiries history</h3>
+
+                  <div class="t-widget t-grid" id="PublicEnquiries">
+                    <table
+                      cellspacing="0"
+                      summary="Click on a column header to sort data"
+                      title="Click on a column header to sort data"
+                    >
+                      <colgroup>
+                        <col />
+                        <col style="width: 80px" />
+                        <col style="width: 80px" />
+                      </colgroup>
+                      <thead class="t-grid-header">
+                        <tr>
+                          <th class="t-header" scope="col"></th>
+                          <th class="t-header" scope="col">Start date</th>
+                          <th class="t-last-header t-header" scope="col">
+                            End date
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr. Daniel Emmerick
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Associate General Manager
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                0409 563 739
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                daniel.emmerick@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>12/Aug/2022</td>
+                          <td class="t-last"></td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr. Brad Chong
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Education Pathways Manager
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4089
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                brad.chong@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>30/Oct/2021</td>
+                          <td class="t-last">11/Aug/2022</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr. Stewart Robinson
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Manager, Education &amp; Training
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4027
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                stewart.robinson@3Bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>10/Jun/2021</td>
+                          <td class="t-last">29/Oct/2021</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr. Stewart Robinson
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Manager, Education &amp; Training
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                1300 327 434
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                stewart.robinson@3Bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>24/Jan/2020</td>
+                          <td class="t-last">09/Jun/2021</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Mirrinda McKenzie
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Training Administrator
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                1300 327 434
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4050
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                training@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>28/Oct/2016</td>
+                          <td class="t-last">23/Jan/2020</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Mirrinda McKenzie
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Training Administrator
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                1300 327 434
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4050
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                training@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />CARSS PARKNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>13/May/2016</td>
+                          <td class="t-last">27/Oct/2016</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Mable Tan
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Senior Training Administrator
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4000
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4050
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                mable.tan@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />CARSS PARKNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>15/Oct/2015</td>
+                          <td class="t-last">12/May/2016</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Mable Tan
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Senior Training Administrator
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Incorporated
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4000
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4050
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                mable.tan@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />CARSS PARKNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">14/Oct/2015</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <br />
+
+                  <h3>Registration Enquiries history</h3>
+
+                  <div class="t-widget t-grid" id="RegistrationEnquiries">
+                    <table
+                      cellspacing="0"
+                      summary="Click on a column header to sort data"
+                      title="Click on a column header to sort data"
+                    >
+                      <colgroup>
+                        <col />
+                        <col style="width: 80px" />
+                        <col style="width: 80px" />
+                      </colgroup>
+                      <thead class="t-grid-header">
+                        <tr>
+                          <th class="t-header" scope="col"></th>
+                          <th class="t-header" scope="col">Start date</th>
+                          <th class="t-last-header t-header" scope="col">
+                            End date
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms. Leslie Shepley
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Training &amp; Education Coordinator
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4044
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                training@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>12/Aug/2022</td>
+                          <td class="t-last"></td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms. Leslie Shepley
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Training &amp; Education Coordinator
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                0448 919 368
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                training@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>03/Feb/2022</td>
+                          <td class="t-last">11/Aug/2022</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr. Stewart Robinson
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Manager, Education &amp; Training
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4027
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                stewart.robinson@3Bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>10/Jun/2021</td>
+                          <td class="t-last">02/Feb/2022</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr. Stewart Robinson
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Manager, Education &amp; Training
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                1300 327 434
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                stewart.robinson@3Bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>24/Jan/2020</td>
+                          <td class="t-last">09/Jun/2021</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms. Bernadette Frawley
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Coordinator, Education and Training
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                1300 327 434
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4050
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                bernadette.frawley@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>04/Apr/2019</td>
+                          <td class="t-last">23/Jan/2020</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Mr. Matt Spanko
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Manager, TEI
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                1300 327 434
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width"></div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                matthew.spanko@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>19/Mar/2018</td>
+                          <td class="t-last">03/Apr/2019</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms. Bernadette Frawley
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Training and Development Officer
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                1300 327 434
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4050
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                bernadette.frawley@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />Carss ParkNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>28/Oct/2016</td>
+                          <td class="t-last">18/Mar/2018</td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Bernadette Frawley
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Training and Development Officer
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Limited
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4000
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4050
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                bernadette.frawley@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />CARSS PARKNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>15/Oct/2015</td>
+                          <td class="t-last">27/Oct/2016</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="display-row">
+                              <div class="display-label">Contact names:</div>
+
+                              <div class="display-field-no-width">
+                                Ms Bernadette Frawley
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Job title:</div>
+
+                              <div class="display-field-no-width">
+                                Training and Development Officer
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">
+                                Organisation name:
+                              </div>
+
+                              <div class="display-field-no-width">
+                                3Bridges Community Incorporated
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Phone:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4000
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Fax:</div>
+
+                              <div class="display-field-no-width">
+                                (02) 8558 4050
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Email:</div>
+
+                              <div class="display-field-no-width">
+                                bernadette.frawley@3bridges.org.au
+                              </div>
+                            </div>
+
+                            <div class="display-row">
+                              <div class="display-label">Address:</div>
+
+                              <div class="display-field-no-width">
+                                1/72 Carwar Ave<br />CARSS PARKNSW2221
+                              </div>
+                            </div>
+                          </td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">14/Oct/2015</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <script type="text/javascript">
+                  $(document).ready(function () {
+                    SortOutHistoryDisplay();
+                  });
+                </script>
+              </div>
+              <div class="t-content" id="rtoDetails-4">
+                <div class="outer">
+                  <h2 class="legend">Head office address</h2>
+                  <div class="fieldset">
+                    <div class="display-row">
+                      <div class="display-label">Physical address:</div>
+                      <div class="display-field-no-width">
+                        1/72 Carwar Ave<br />Carss ParkNSW2221
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="outer">
+                  <h2 class="legend">Delivery location(s)</h2>
+                  <div class="fieldset">
+                    <div class="display-row">
+                      <div class="display-label">Delivery location name:</div>
+                      <div class="display-field-no-width" style="width: 500px">
+                        Kyeemagh Community Hub
+                      </div>
+                      <div class="display-label">Physical address:</div>
+                      <div class="display-field-no-width">
+                        Tancred Ave, Kyeemagh, NSW, 2216
+                      </div>
+                      <br />
+
+                      <div class="display-label">Delivery location name:</div>
+                      <div class="display-field-no-width" style="width: 500px">
+                        Head Office - Carss Park Community Centre
+                      </div>
+                      <div class="display-label">Physical address:</div>
+                      <div class="display-field-no-width">
+                        72 Carwar Ave, CARSS PARK, NSW, 2221
+                      </div>
+                      <br />
+
+                      <div class="display-label">Delivery location name:</div>
+                      <div class="display-field-no-width" style="width: 500px">
+                        Penshurst Community Centre
+                      </div>
+                      <div class="display-label">Physical address:</div>
+                      <div class="display-field-no-width">
+                        23 St Georges Rd, PENSHURST, NSW, 2222
+                      </div>
+                      <br />
+
+                      <div class="display-label">Delivery location name:</div>
+                      <div class="display-field-no-width" style="width: 500px">
+                        Menai Community Centre
+                      </div>
+                      <div class="display-label">Physical address:</div>
+                      <div class="display-field-no-width">
+                        34 Allison Cres, MENAI, NSW, 2234
+                      </div>
+                      <br />
+
+                      <div class="display-label">Delivery location name:</div>
+                      <div class="display-field-no-width" style="width: 500px">
+                        Home Modification and Maintenance (Training Room)
+                      </div>
+                      <div class="display-label">Physical address:</div>
+                      <div class="display-field-no-width">
+                        Unit 8 16 Hearne St, MORTDALE, NSW, 2223
+                      </div>
+                      <br />
+
+                      <div class="display-label">Delivery location name:</div>
+                      <div class="display-field-no-width" style="width: 500px">
+                        Youth Zone/Aboriginal Services
+                      </div>
+                      <div class="display-label">Physical address:</div>
+                      <div class="display-field-no-width">
+                        18 Treacy St, HURSTVILLE, NSW, 2220
+                      </div>
+                      <br />
+
+                      <div class="display-label">Delivery location name:</div>
+                      <div class="display-field-no-width" style="width: 500px">
+                        Summer Hill Community Hub
+                      </div>
+                      <div class="display-label">Physical address:</div>
+                      <div class="display-field-no-width">
+                        131 Smith St, SUMMER HILL, NSW, 2130
+                      </div>
+                      <br />
+                      <br />
+                    </div>
+                  </div>
+                </div>
+
+                <div id="contactHistoryField">
+                  <h3>Head office address history</h3>
+                  <div class="t-widget t-grid" id="HeadOfficeAddress-History">
+                    <table
+                      cellspacing="0"
+                      summary="Table listing Head Office Address History"
+                      title="Table listing Head Office Address History"
+                    >
+                      <colgroup>
+                        <col />
+                        <col style="width: 80px" />
+                        <col style="width: 80px" />
+                      </colgroup>
+                      <thead class="t-grid-header">
+                        <tr>
+                          <th class="t-header" scope="col">Address</th>
+                          <th class="t-header" scope="col">Start date</th>
+                          <th class="t-last-header t-header" scope="col">
+                            End date
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>1/72 Carwar Ave<br />Carss ParkNSW2221</td>
+                          <td>28/Oct/2016</td>
+                          <td class="t-last"></td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>1/72 Carwar Ave<br />CARSS PARKNSW2221</td>
+                          <td>11/Dec/2014</td>
+                          <td class="t-last">27/Oct/2016</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <h3>Postal address history</h3>
+                  No records to display.
+
+                  <h3>Principal address history</h3>
+                  No records to display.
+                  <h3>Rto delivery location history</h3>
+                  <div class="t-widget t-grid" id="RtoDeliveryLocation-History">
+                    <table
+                      cellspacing="0"
+                      summary="Table listing Rto Delivery Location History"
+                      title="Table listing Rto Delivery Location History"
+                    >
+                      <colgroup>
+                        <col />
+                        <col />
+                        <col style="width: 80px" />
+                        <col style="width: 80px" />
+                      </colgroup>
+                      <thead class="t-grid-header">
+                        <tr>
+                          <th class="t-header" scope="col">
+                            Delivery location name
+                          </th>
+                          <th class="t-header" scope="col">Address</th>
+                          <th class="t-header" scope="col">Start date</th>
+                          <th class="t-last-header t-header" scope="col">
+                            End date
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Kyeemagh Community Hub</td>
+                          <td>Tancred Ave<br />KyeemaghNSW2216</td>
+                          <td>11/Jun/2021</td>
+                          <td class="t-last"></td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>Summer Hill Community Hub</td>
+                          <td>131 Smith St<br />SUMMER HILLNSW2130</td>
+                          <td>10/Jun/2021</td>
+                          <td class="t-last"></td>
+                        </tr>
+                        <tr>
+                          <td>Head Office - Carss Park Community Centre</td>
+                          <td>72 Carwar Ave<br />CARSS PARKNSW2221</td>
+                          <td>27/Jun/2020</td>
+                          <td class="t-last"></td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>Penshurst Community Centre</td>
+                          <td>23 St Georges Rd<br />PENSHURSTNSW2222</td>
+                          <td>27/Jun/2020</td>
+                          <td class="t-last"></td>
+                        </tr>
+                        <tr>
+                          <td>Menai Community Centre</td>
+                          <td>34 Allison Cres<br />MENAINSW2234</td>
+                          <td>27/Jun/2020</td>
+                          <td class="t-last"></td>
+                        </tr>
+                        <tr class="t-alt">
+                          <td>
+                            Home Modification and Maintenance (Training Room)
+                          </td>
+                          <td>Unit 8 16 Hearne St<br />MORTDALENSW2223</td>
+                          <td>27/Jun/2020</td>
+                          <td class="t-last"></td>
+                        </tr>
+                        <tr>
+                          <td>Youth Zone/Aboriginal Services</td>
+                          <td>18 Treacy St<br />HURSTVILLENSW2220</td>
+                          <td>27/Jun/2020</td>
+                          <td class="t-last"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <script type="text/javascript">
+                  $(document).ready(function () {
+                    SortOutHistoryDisplay();
+                  });
+                </script>
+              </div>
+              <div class="t-content" id="rtoDetails-5"></div>
+              <div class="t-content" id="rtoDetails-6"></div>
+              <div class="t-content" id="rtoDetails-7"></div>
+            </div>
+
+            <div class="backtotop">
+              <a href="#navigation" title="Scroll back to the top of this page."
+                >Back to top</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script src="/bundles/javascript?v=0bvaoz-aqoEV7vRFj8ENmjlWun-BabCNm9njAhHyJRk1"></script>
+
+      <script type="text/javascript">
+        <!--
+        var showAlertBoxes = true;
+        var staticAssistant = false;
+        var twoCol = false;
+
+        $(document).ready(function () {
+          shortcut.add(
+            "s",
+            function () {
+              window.location = "/Search";
+              return false;
+            },
+            {
+              type: "keydown",
+              propagate: false,
+              disable_in_input: true,
+              target: document,
+            }
+          );
+
+          shortcut.add(
+            "h",
+            function () {
+              window.location = "/";
+              return false;
+            },
+            {
+              type: "keydown",
+              propagate: false,
+              disable_in_input: true,
+              target: document,
+            }
+          );
+
+          $("body").bind("mousemove", function () {
+            $("body").unbind("mousemove");
+            showAlertBoxes = false;
+          });
+
+          $("input")
+            .filter("$[value*=Submit]")
+            .add($("input").filter("$[value*=submit]"))
+            .add($("input").filter("$[value*=Add]"))
+            .bind("click", function (e) {
+              $("#fakelinktoerrormsg").focus();
+            });
+
+          $(".SearchBoxLarge input[type=text]").keyup(function () {
+            if ($(this).val() === "") {
+              $(".SearchBoxLarge .deleteicon").removeClass("deleteiconshow");
+            } else {
+              $(".SearchBoxLarge .deleteicon").addClass("deleteiconshow");
+            }
+          });
+
+          if ($(".SearchBoxLarge input[type=text]").val() === "") {
+            $(".SearchBoxLarge .deleteicon").removeClass("deleteiconshow");
+          } else {
+            $(".SearchBoxLarge .deleteicon").addClass("deleteiconshow");
+          }
+
+          $('input[id^="TgaSearch"]').autocomplete({
+            source: function (request, response) {
+              var searchType = $("#searchType").val();
+
+              if (searchType == null) {
+                searchType = $("input[name='SearchType']:checked").val();
+              }
+
+              selecttext = "";
+              var url =
+                "/Search/AjaxAutocompleteSearch?SearchType=" + searchType;
+              $.ajax({
+                type: "POST",
+                url: url,
+                dataType: "json",
+                data: {
+                  searchType: searchType,
+                  text: $(this).get(0).term,
+                },
+                success: function (data) {
+                  var array = data.error
+                    ? []
+                    : $.map(data, function (m) {
+                        return {
+                          label: m.Text,
+                          value: m.Value,
+                        };
+                      });
+                  response(array);
+                },
+              });
+            },
+            minLength: 3,
+            select: function (event, ui) {
+              var redirectUrl = "";
+              selecttext = ui.item.label.split("-")[0];
+              if ($("input[name='SearchType']:checked").val() == "Rto") {
+                redirectUrl = "/Organisation/Details/" + ui.item.value;
+              } else {
+                redirectUrl = "/Training/Details/" + ui.item.value;
+              }
+
+              window.location.href = redirectUrl;
+            },
+            close: function (event, ui) {
+              if (selecttext !== "") {
+                $('input[id^="TgaSearch"]').val(selecttext);
+              }
+            },
+          });
+        });
+
+        //toggles the CSS, form and search field depending on what the user has selected
+        function ToggleSearchOption(option) {
+          if (option.value == "Nrt") {
+            $("#toggler").attr("class", "toggleNrt");
+            $("#togglerSearchBar").attr("class", "toggleNrt");
+            $("#TgaSearchBarForm .SearchOptions #NrtSearchBar").attr(
+              "checked",
+              "checked"
+            );
+            $("#TgaSearchForm .SearchOptions #Nrt").attr("checked", "checked");
+            $("#TgaSearchBarForm .SearchOptions #RtoSearchBar").attr(
+              "checked",
+              false
+            );
+            $("#TgaSearchForm .SearchOptions #Rto").attr("checked", false);
+            setCookieForHistory("TgaSearchOption", "Nrt", 365);
+          } else if (option.value == "Rto") {
+            $("#toggler").attr("class", "toggleRto");
+            $("#togglerSearchBar").attr("class", "toggleRto");
+            $("#TgaSearchBarForm .SearchOptions #RtoSearchBar").attr(
+              "checked",
+              "checked"
+            );
+            $("#TgaSearchForm .SearchOptions #Rto").attr("checked", "checked");
+            $("#TgaSearchBarForm .SearchOptions #NrtSearchBar").attr(
+              "checked",
+              false
+            );
+            $("#TgaSearchForm .SearchOptions #Nrt").attr("checked", false);
+            setCookieForHistory("TgaSearchOption", "Rto", 365);
+          }
+        }
+
+        //loads the last option the user selected when reloading for the CSS, form and search field depending on what the user has selected
+        $(document).ready(function () {
+          var searchSelected = getCookie("TgaSearchOption");
+
+          if (
+            searchSelected === undefined ||
+            searchSelected == null ||
+            searchSelected.length <= 0
+          ) {
+            searchSelected = "Nrt";
+          }
+
+          if (searchSelected == "Nrt") {
+            $("#toggler").attr("class", "toggleNrt");
+            $("#togglerSearchBar").attr("class", "toggleNrt");
+            $("#TgaSearchBarForm .SearchOptions #NrtSearchBar").attr(
+              "checked",
+              "checked"
+            );
+            $("#TgaSearchForm .SearchOptions #Nrt").attr("checked", "checked");
+            $("#TgaSearchBarForm .SearchOptions #RtoSearchBar").attr(
+              "checked",
+              false
+            );
+            $("#TgaSearchForm .SearchOptions #Rto").attr("checked", false);
+          } else if (searchSelected == "Rto") {
+            $("#toggler").attr("class", "toggleRto");
+            $("#togglerSearchBar").attr("class", "toggleRto");
+            $("#TgaSearchBarForm .SearchOptions #RtoSearchBar").attr(
+              "checked",
+              "checked"
+            );
+            $("#TgaSearchForm .SearchOptions #Rto").attr("checked", "checked");
+            $("#TgaSearchBarForm .SearchOptions #NrtSearchBar").attr(
+              "checked",
+              false
+            );
+            $("#TgaSearchForm .SearchOptions #Nrt").attr("checked", false);
+          }
+        });
+        //-->
+      </script>
+      <script type="text/javascript">
+        <!--
+        $(document).ready(function () {
+          if (getParameterByName("setFocus") != null) {
+            $("#" + getParameterByName("setFocus") + " a:first").focus();
+          }
+        });
+
+        function getParameterByName(name) {
+          name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+          var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+          return results == null
+            ? null
+            : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+        //-->
+      </script>
+
+      <link
+        href="/Content/Styles/css?v=HCcpxfuh3s5nGKIncoZev80I87y4yTRT7hDQ-NuBtx41"
+        rel="stylesheet"
+      />
+
+      <link
+        type="text/css"
+        href="/asset.axd?id=vQAAAB-LCAAAAAAABACrVkpRsoquVipQslJyzs8rSc0r0TcyMDTQM9YzNDQ0UNJRSgPL5wHlS1JzUosys_WS83Nz8_P0cjPz9JKLi4FK8pWsDGpja3VQjQkuqcxJLcZqQkl6IkKrIVBrrI5ScglYQUWJPkSmDMhFdUky0KnGZqZAhpJVSVFpai0ADM2Fk70AAAA%3d"
+        rel="stylesheet"
+      />
+
+      <div id="layoutFooter">
+        <div id="footer">
+          <div class="footerMenu">
+            <div>
+              <h3>Reports</h3>
+              <ul>
+                <li>
+                  <a
+                    href="/Reporting#Accreditedcoursereports"
+                    title="Accredited course Reports"
+                    >Accredited course Reports</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/Reporting#Classificationreports"
+                    title="Classification reports"
+                    >Classification reports</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/Reporting#Qualificationreports"
+                    title="Qualification reports"
+                    >Qualification reports</a
+                  >
+                </li>
+                <li>
+                  <a href="/Reporting#RTOreports" title="RTO reports"
+                    >RTO reports</a
+                  >
+                </li>
+                <li>
+                  <a href="/Reporting#Taxonomyreports" title="Taxonomy reports"
+                    >Taxonomy reports</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/Reporting#Trainingpackagereports"
+                    title="Training package reports"
+                    >Training package reports</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3>Resources</h3>
+              <ul>
+                <li>
+                  <a
+                    href="/Link#AnchorAustralianGovernmentBodies"
+                    title="Link to Australian Government bodies resources"
+                    >Australian Government Bodies</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/Link#TrainingPackageDevelopers"
+                    title="Link to Training Package Developers resources"
+                    >Training Package Developers</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/Link#AnchorSTAs"
+                    title="Link to Regulatory Authorities resources"
+                    >Regulatory Authorities</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/Link#AnchorRCABs"
+                    title="Link to State and Territory Government Training Departments resources"
+                    >State and Territory Government Training Departments</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="/Link#AnchorNationalVETWebsites"
+                    title="Link to National VET Websites resources"
+                    >National VET Websites</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3>More</h3>
+              <ul>
+                <li><a href="/Home/News" title="Link to news">News</a></li>
+                <li>
+                  <a
+                    href="/Home/Enquiry"
+                    title="Link to frequently asked questions"
+                    >Frequently Asked Questions</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3>Using training.gov.au</h3>
+              <ul>
+                <li><a href="/Home/TermsOfUse">Terms of use</a></li>
+                <li><a href="/Home/PrivacyPolicy">Privacy policy</a></li>
+                <li><a href="/Home/Copyright">Copyright</a></li>
+                <li><a href="/Home/SiteMap">Site Map</a></li>
+              </ul>
+            </div>
+          </div>
+          <div id="footright">
+            <div id="logo">
+              <img
+                src="/Content/images/training-logo-red-RGB-237.25-kern.png"
+                alt="TGA Logo stepping stones"
+              />
+            </div>
+            <div id="version">[Site version 3.22.1.18]</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--End of Page div-->
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.common.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.grid.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.calendar.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.datepicker.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.grid.editing.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/jquery.validate.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.grid.filtering.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.autocomplete.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.combobox.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.grid.grouping.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.list.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.draganddrop.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.window.min.js"
+    ></script>
+
+    <script
+      type="text/javascript"
+      src="/Scripts/2010.3.1110/telerik.tabstrip.min.js"
+    ></script>
+
+    <script type="text/javascript">
+      //<![CDATA[
+
+      jQuery(document).ready(function () {
+        if (!jQuery.telerik) jQuery.telerik = {};
+
+        jQuery.telerik.cultureInfo = {
+          shortDate: "dd/MMM/yyyy",
+          longDate: "dddd, d MMMM yyyy",
+          longTime: "h:mm:ss tt",
+          shortTime: "h:mm tt",
+          fullDateTime: "dddd, d MMMM yyyy h:mm:ss tt",
+          sortableDateTime:
+            "yyyy\u0027-\u0027MM\u0027-\u0027dd\u0027T\u0027HH\u0027:\u0027mm\u0027:\u0027ss",
+          universalSortableDateTime:
+            "yyyy\u0027-\u0027MM\u0027-\u0027dd HH\u0027:\u0027mm\u0027:\u0027ss\u0027Z\u0027",
+          generalDateShortTime: "dd/MMM/yyyy h:mm tt",
+          generalDateTime: "dd/MMM/yyyy h:mm:ss tt",
+          monthDay: "d MMMM",
+          monthYear: "MMMM yyyy",
+          days: [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+          ],
+          abbrDays: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+          abbrMonths: [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+            "",
+          ],
+          months: [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+            "",
+          ],
+          am: "AM",
+          pm: "PM",
+          dateSeparator: "/",
+          timeSeparator: ":",
+          currencydecimaldigits: 2,
+          currencydecimalseparator: ".",
+          currencygroupseparator: ",",
+          currencygroupsize: 3,
+          currencynegative: 1,
+          currencypositive: 0,
+          currencysymbol: "$",
+          numericdecimaldigits: 2,
+          numericdecimalseparator: ".",
+          numericgroupseparator: ",",
+          numericgroupsize: 3,
+          numericnegative: 1,
+          percentdecimaldigits: 2,
+          percentdecimalseparator: ".",
+          percentgroupseparator: ",",
+          percentgroupsize: 3,
+          percentnegative: 1,
+          percentpositive: 1,
+          percentsymbol: "%",
+        };
+
+        jQuery("#Window").tWindow({
+          onClose: whenHistoryWindowClosed,
+          modal: false,
+          draggable: false,
+          resizable: false,
+        });
+
+        jQuery("#rtoDetails").tTabStrip({ onSelect: OnTabSelect });
+
+        jQuery("#ChiefExecutive").tGrid({
+          columns: [
+            {},
+            {
+              title: "Start date",
+              member: "StartDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+            {
+              title: "End date",
+              member: "EndDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+          ],
+          urlFormat:
+            "/Organisation/Details/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=2",
+          pageSize: 0,
+        });
+
+        jQuery("#ManagerialAgent").tGrid({
+          columns: [
+            {},
+            {
+              title: "Start date",
+              member: "StartDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+            {
+              title: "End date",
+              member: "EndDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+          ],
+          urlFormat:
+            "/Organisation/Details/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=2",
+          pageSize: 0,
+        });
+
+        jQuery("#PublicEnquiries").tGrid({
+          columns: [
+            {},
+            {
+              title: "Start date",
+              member: "StartDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+            {
+              title: "End date",
+              member: "EndDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+          ],
+          urlFormat:
+            "/Organisation/Details/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=2",
+          pageSize: 0,
+        });
+
+        jQuery("#RegistrationEnquiries").tGrid({
+          columns: [
+            {},
+            {
+              title: "Start date",
+              member: "StartDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+            {
+              title: "End date",
+              member: "EndDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+          ],
+          urlFormat:
+            "/Organisation/Details/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=2",
+          pageSize: 0,
+        });
+
+        jQuery("#HeadOfficeAddress-History").tGrid({
+          columns: [
+            { title: "Address", member: "Address", type: "Object" },
+            {
+              title: "Start date",
+              member: "StartDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+            {
+              title: "End date",
+              member: "EndDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+          ],
+          urlFormat:
+            "/Organisation/Details/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=2",
+          pageSize: 0,
+        });
+
+        jQuery("#OrganisationPostalAddress-History").tGrid({
+          columns: [
+            { title: "Address", member: "Address", type: "Object" },
+            {
+              title: "Start date",
+              member: "StartDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+            {
+              title: "End date",
+              member: "EndDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+          ],
+          urlFormat:
+            "/Organisation/Details/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=2",
+          pageSize: 0,
+        });
+
+        jQuery("#OrganisationPrincipalAddress-History").tGrid({
+          columns: [
+            { title: "Address", member: "Address", type: "Object" },
+            {
+              title: "Start date",
+              member: "StartDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+            {
+              title: "End date",
+              member: "EndDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+          ],
+          urlFormat:
+            "/Organisation/Details/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=2",
+          pageSize: 0,
+        });
+
+        jQuery("#RtoDeliveryLocation-History").tGrid({
+          columns: [
+            {
+              title: "Delivery location name",
+              member: "DeliveryLocationName",
+              type: "String",
+            },
+            { title: "Address", member: "Address", type: "Object" },
+            {
+              title: "Start date",
+              member: "StartDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+            {
+              title: "End date",
+              member: "EndDate",
+              type: "Date",
+              format: "{0:d}",
+            },
+          ],
+          urlFormat:
+            "/Organisation/Details/93cd5367-2c2a-4453-aff5-c38ecf013004?tabIndex=2",
+          pageSize: 0,
+        });
+      });
+
+      //]]>
+    </script>
+  </body>
+</html>
